@@ -2,6 +2,16 @@
   "name": "react-movies",
   "version": "0.1.0",
   "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Xavier Palacín Ayuso",
+    "email": "cubiczx@hotmail.com",
+    "url": "https://github.com/cubiczx"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cubiczx/react-movies"
+  },
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
