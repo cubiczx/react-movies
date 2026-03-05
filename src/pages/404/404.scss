@@ -1,0 +1,28 @@
+.error-404 {
+    height: calc(100vh - 64px); // 64px menu height
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    h1 {
+        font-size: 100px;
+        margin: 0;
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: 2px;
+    }
+
+    h2 {
+        font-size: 50px;
+        margin: 0;
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: 2px;
+    }
+
+    h3 {
+        font-size: 30px;
+        margin: 0;
+        font-family: 'Bebas Neue', sans-serif;
+        letter-spacing: 2px;
+    }
+}

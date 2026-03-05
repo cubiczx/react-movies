@@ -1,0 +1,15 @@
+.menu-top{
+    display: flex;
+
+    .ant-menu {
+        flex: 1;
+    }
+
+    &__logo{
+        display: flex;
+        margin-right: 40px;;
+        svg {
+            width: 40px;
+        }
+    }
+}

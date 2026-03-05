@@ -17,13 +17,20 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "antd": "^6.3.1",
+    "dayjs": "^1.11.19",
+    "query-string": "^9.3.1",
+    "rc-pagination": "^5.1.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
+    "react-player": "^3.4.0",
+    "react-router-dom": "^7.13.1",
     "react-scripts": "5.0.1",
+    "sass": "^1.44.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -33,6 +40,21 @@
       "react-app",
       "react-app/jest"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "node_modules/(?!(react-router|react-router-dom|@remix-run)/)"
+    ],
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^react-router$": "<rootDir>/node_modules/react-router/dist/development/index.js",
+      "^@rc-component/picker(.*)$": "<rootDir>/src/__mocks__/emptyMock.js",
+      "^react-player$": "<rootDir>/src/__mocks__/reactPlayerMock.js",
+      "\\.css$": "<rootDir>/src/__mocks__/fileMock.js",
+      "\\.less$": "<rootDir>/src/__mocks__/fileMock.js",
+      "\\.svg$": "<rootDir>/src/__mocks__/svgMock.js"
+    }
   },
   "browserslist": {
     "production": [

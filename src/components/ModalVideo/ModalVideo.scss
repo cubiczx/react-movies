@@ -1,0 +1,28 @@
+.modal-video {
+    .ant-modal-container {
+        background-color: black;
+    }
+
+    .ant-modal-close {
+        color: white;
+
+        .ant-modal-close-x {
+            font-size: 24px;
+        }
+    }
+
+    .ant-modal-body {
+        background-color: black;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        youtube-video,
+        vimeo-video,
+        > div {
+            width: 100% !important;
+            height: 100% !important;
+        }
+    }
+}

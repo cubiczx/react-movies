@@ -1,70 +1,230 @@
-# Getting Started with Create React App
+# React Movies 🎬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Aplicación de catálogo de películas que consume la API de TMDB, permitiendo explorar estrenos, películas populares, buscar títulos y ver detalles con tráiler.
 
-## Available Scripts
+## 📋 Descripción
 
-In the project directory, you can run:
+Esta aplicación es un catálogo de películas con funcionalidades completas:
 
-### `npm start`
+- **Página de inicio**: Slider con las últimas películas en cartelera
+- **Últimos lanzamientos**: Grid paginado de películas en cartelera
+- **Películas Populares**: Grid paginado de películas populares
+- **Búsqueda**: Búsqueda en tiempo real con debounce al escribir y soporte para Enter
+- **Detalle de película**: Información completa con póster, sinopsis, géneros y tráiler
+- **Reproductor de vídeo**: Modal con tráiler de YouTube/Vimeo al hacer clic en "Ver"
+- **Paginación**: Navegación entre páginas de resultados
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 🛠️ Tecnologías
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- React 19
+- TypeScript
+- Ant Design v6
+- React Router DOM v7
+- Day.js
+- SCSS/Sass
+- TMDB API
+- React Player v3
+- React Testing Library
+- Jest
 
-### `npm test`
+## 🚀 Cómo Ejecutar
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Prerequisitos
 
-### `npm run build`
+- Node.js (v14 o superior)
+- npm o yarn
+- API Key de [TMDB](https://www.themoviedb.org/settings/api)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Instalación
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Navega al directorio del proyecto:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+cd "react-movies"
+```
 
-### `npm run eject`
+2. Instala las dependencias:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm install
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+3. Configura tu API Key de TMDB en `src/utils/constants.ts`:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+```ts
+export const API_KEY = "tu_api_key_aquí";
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Ejecución en Desarrollo
 
-## Learn More
+```bash
+npm run dev
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+La aplicación se abrirá en [http://localhost:3000](http://localhost:3000).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Ejecutar Tests
 
-### Code Splitting
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Build para Producción
 
-### Analyzing the Bundle Size
+```bash
+npm run build
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📚 Conceptos Demostrados
 
-### Making a Progressive Web App
+### 1. **Custom Hook useFetch**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Hook reutilizable para peticiones a la API con manejo de estados:
 
-### Advanced Configuration
+```ts
+export default function useFetch(url: string) {
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // ...
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 2. **Componente MoviePage reutilizable**
 
-### Deployment
+Componente genérico que recibe título y endpoint, eliminando duplicación entre páginas:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```tsx
+<MoviePage title="Últimos lanzamientos" endpoint="movie/now_playing" />
+<MoviePage title="Películas Populares" endpoint="movie/popular" />
+```
 
-### `npm run build` fails to minify
+### 3. **Búsqueda con Debounce**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Búsqueda en tiempo real sin saturar la API, actualizando la URL con `useSearchParams`:
+
+```tsx
+debounceRef.current = setTimeout(() => {
+  setSearchParams({ q: value });
+}, 300);
+```
+
+### 4. **React Router v7**
+
+Navegación con rutas dinámicas y lectura de parámetros:
+
+```tsx
+const { id } = useParams();
+const [searchParams, setSearchParams] = useSearchParams();
+```
+
+### 5. **Modal de Vídeo**
+
+Reproductor de YouTube/Vimeo en modal con parada automática al cerrar usando `destroyOnHidden`:
+
+```tsx
+<Modal destroyOnHidden open={isOpen} onCancel={onClose}>
+  <ReactPlayer url={videoUrl} />
+</Modal>
+```
+
+### 6. **Grid Responsive**
+
+Catálogo con tarjetas de altura uniforme usando Ant Design Grid y CSS:
+
+```tsx
+<Row gutter={[16, 16]}>
+  <Col xs={24} sm={12} md={8} lg={6} xl={4}>
+    <MovieCard movie={movie} />
+  </Col>
+</Row>
+```
+
+### 7. **Formateo de fechas con Day.js**
+
+Sustituto moderno y ligero de Moment.js (~2KB vs ~70KB):
+
+```tsx
+const year = dayjs(releaseDate).format("YYYY");
+```
+
+## 📁 Estructura del Proyecto
+
+```text
+react-movies/
+├── src/
+│   ├── components/
+│   │   ├── Error/
+│   │   ├── Footer/
+│   │   ├── Loading/
+│   │   ├── MenuTop/
+│   │   ├── ModalVideo/
+│   │   ├── MovieCatalog/
+│   │   ├── MovieList/
+│   │   ├── MoviePage/
+│   │   ├── Pagination/
+│   │   └── SliderMovies/
+│   ├── hooks/
+│   │   └── useFetch.ts
+│   ├── pages/
+│   │   ├── 404/
+│   │   ├── movie/
+│   │   ├── search/
+│   │   ├── home.tsx
+│   │   ├── latest-releases.tsx
+│   │   └── popular.tsx
+│   ├── utils/
+│   │   └── constants.ts
+│   ├── App.tsx
+│   ├── index.scss
+│   └── index.tsx
+└── package.json
+```
+
+## 🎯 Características Principales
+
+### Catálogo de Películas
+
+- ✅ Grid responsive con tarjetas de altura uniforme
+- ✅ Imagen de portada con recorte inteligente (object-fit: cover)
+- ✅ Títulos truncados a 2 líneas con puntos suspensivos
+- ✅ Paginación completa entre resultados
+
+### Búsqueda
+
+- ✅ Búsqueda en tiempo real con debounce de 300ms
+- ✅ Soporte para búsqueda al pulsar Enter
+- ✅ URL actualizada con el término de búsqueda (`?q=...`)
+
+### Detalle de Película
+
+- ✅ Fondo con imagen backdrop de la película
+- ✅ Póster, título, año, géneros y sinopsis
+- ✅ Botón para reproducir el tráiler en modal
+- ✅ Vídeo se detiene automáticamente al cerrar el modal
+
+### Navegación
+
+- ✅ Menú superior con enlaces a todas las secciones
+- ✅ Rutas dinámicas para detalle de película (`/movie/:id`)
+- ✅ Página 404 para rutas no encontradas
+
+## 🧪 Testing
+
+El proyecto incluye tests para los componentes principales. Ejecuta los tests con:
+
+```bash
+npm test
+```
+
+## 🤝 Contribuciones
+
+Este es un proyecto educativo. Siéntete libre de hacer fork y experimentar con diferentes conceptos de React.
+
+## 📝 Licencia
+
+MIT
+
+## 👨‍💻 Autor
+
+Proyecto creado como parte del curso de React en Udemy.
